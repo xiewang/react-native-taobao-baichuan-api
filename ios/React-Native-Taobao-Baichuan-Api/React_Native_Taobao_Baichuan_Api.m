@@ -39,28 +39,35 @@ RCT_EXPORT_MODULE(React_Native_Taobao_Baichuan_Api);
 RCT_EXPORT_METHOD(jump:(NSString *)itemId)
 {
     
-    [self itemDetailPage];
+    [self itemDetailPage: itemId];
    
 }
 
--(void)itemDetailPage{
+-(void)itemDetailPage: (NSString *) item{
     // create page
-    NSString *itemID = @"AAF6OHtzACXqtpfJSgJWv2Jc";//itemId可以传入真实的或者混淆的商品id
+    NSString *itemID = item;//itemId可以传入真实的或者混淆的商品id
     
     NSDictionary *params = @{@"_viewType" : @"taobaoH5", @"isv_code" : @"tag1"};
     //iemDetailPage的params有如下参数可以配置:
     // isv_code :开发者自己传入，可以在订单中跟踪此参数
     //_viewType : taobaoH5 （淘宝H5）
-    ALBBPage *page = [ALBBPage itemDetailPage:itemID params:params];
+    ALBBTradePage *page = [ALBBTradePage itemDetailPage:itemID params:params];
+    ALBBTradeTaokeParams *taoKeParams=[[ALBBTradeTaokeParams alloc] init];
+
     
     // show
     id <ALBBTradeService> tradeService = [[ALBBSDK sharedInstance] getService:@protocol(ALBBTradeService)];
-    [tradeService       show:null
+    [tradeService       show:self.viewController
                   isNeedPush:NO
            webViewUISettings:nil
                         page:page
- tradeProcessSuccessCallback:^(TaeTradeProcessResult * __nullable result) { /* handle result */ }
-  tradeProcessFailedCallback:^(NSError * __nullable error) { /* handle error */ }
+                 taoKeParams:taoKeParams
+ tradeProcessSuccessCallback:^(ALBBTradeResult * __nullable result) {
+     NSLog(@"%@", result);
+ }
+  tradeProcessFailedCallback:^(NSError * __nullable error) {
+      NSLog(@"%@", error);
+  }
      ];
 
 }

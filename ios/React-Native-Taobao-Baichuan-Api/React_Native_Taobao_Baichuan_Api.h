@@ -14,5 +14,6 @@
 
 @interface React_Native_Taobao_Baichuan_Api : NSObject <RCTBridgeModule>
 
+- (UINavigationController *)viewController;
 
 @end
