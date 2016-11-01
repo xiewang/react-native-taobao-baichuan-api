@@ -10,31 +10,9 @@
 
 @implementation React_Native_Taobao_Baichuan_Api
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-  
-    [[ALBBSDK sharedInstance] setDebugLogOpen:YES]; // 打开debug日志
-    [[ALBBSDK sharedInstance] setUseTaobaoNativeDetail:NO]; // 优先使用手淘APP打开商品详情页面，如果没有安装手机淘宝，SDK会使用H5打开
-    [[ALBBSDK sharedInstance] setViewType:ALBB_ITEM_VIEWTYPE_TAOBAO];// 使用淘宝H5页面打开商品详情
-    [[ALBBSDK sharedInstance] setISVCode:@"my_isv_code"]; //设置全局的app标识，在电商模块里等同于isv_code
-    [[ALBBSDK sharedInstance] asyncInit:^{ // 基础SDK初始化
-        NSLog(@"init success");
-    } failure:^(NSError *error) {
-        NSLog(@"init failure, %@", error);
-    }];
-    
-    return YES;
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    BOOL isHandled = [[ALBBSDK sharedInstance] handleOpenURL:url]; // 如果百川处理过会返回YES
-    if (!isHandled) {
-        // 其他处理逻辑
-    }
-    return YES;
-}
 
 RCT_EXPORT_MODULE(React_Native_Taobao_Baichuan_Api);
+
 
 RCT_EXPORT_METHOD(jump:(NSString *)itemId)
 {
@@ -44,6 +22,8 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
 }
 
 -(void)itemDetailPage: (NSString *) item{
+    UIViewController *rootViewController = RCTPresentedViewController();
+
     // create page
     NSString *itemID = item;//itemId可以传入真实的或者混淆的商品id
     
@@ -57,7 +37,7 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
     
     // show
     id <ALBBTradeService> tradeService = [[ALBBSDK sharedInstance] getService:@protocol(ALBBTradeService)];
-    [tradeService       show:self.viewController
+    [tradeService       show:rootViewController
                   isNeedPush:NO
            webViewUISettings:nil
                         page:page
@@ -69,7 +49,7 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
       NSLog(@"%@", error);
   }
      ];
-
+    return;
 }
 
 
