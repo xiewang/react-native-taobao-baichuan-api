@@ -18,12 +18,12 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
 {
     
     [self itemDetailPage: itemId];
-   
+    
 }
 
 -(void)itemDetailPage: (NSString *) item{
     UIViewController *rootViewController = RCTPresentedViewController();
-
+    
     // create page
     NSString *itemID = item;//itemId可以传入真实的或者混淆的商品id
     
@@ -33,7 +33,7 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
     //_viewType : taobaoH5 （淘宝H5）
     ALBBTradePage *page = [ALBBTradePage itemDetailPage:itemID params:params];
     ALBBTradeTaokeParams *taoKeParams=[[ALBBTradeTaokeParams alloc] init];
-
+    taoKeParams.pid = @"xxx";
     
     // show
     id <ALBBTradeService> tradeService = [[ALBBSDK sharedInstance] getService:@protocol(ALBBTradeService)];
