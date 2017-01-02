@@ -1,0 +1,26 @@
+{
+  "name": "react-native-taobao-baichuan-api",
+  "version": "1.0.0",
+  "description": "react native module for baichuan api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiewang/react-native-taobao-baichuan-api.git"
+  },
+  "keywords": [
+    "baichuan",
+    "react-native",
+    "ios",
+    "android",
+    "taobao"
+  ],
+  "author": "xiewang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiewang/react-native-taobao-baichuan-api/issues"
+  },
+  "homepage": "https://github.com/xiewang/react-native-taobao-baichuan-api#readme"
+}
