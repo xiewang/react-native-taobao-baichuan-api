@@ -22,34 +22,45 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
 }
 
 -(void)itemDetailPage: (NSString *) item{
-    UIViewController *rootViewController = RCTPresentedViewController();
     
-    // create page
-    NSString *itemID = item;//itemId可以传入真实的或者混淆的商品id
+    NSString *itemID = item;
+    id<AlibcTradePage> page = [AlibcTradePageFactory itemDetailPage: itemID];
+    //淘客信息
+    AlibcTradeTaokeParams *taoKeParams=[[AlibcTradeTaokeParams alloc] init];
+    taoKeParams.pid= nil;
+    //打开方式
+    AlibcTradeShowParams* showParam = [[AlibcTradeShowParams alloc] init];
+    showParam.openType = ALiOpenTypeAuto;
     
-    NSDictionary *params = @{@"_viewType" : @"taobaoH5", @"isv_code" : @"tag1"};
-    //iemDetailPage的params有如下参数可以配置:
-    // isv_code :开发者自己传入，可以在订单中跟踪此参数
-    //_viewType : taobaoH5 （淘宝H5）
-    ALBBTradePage *page = [ALBBTradePage itemDetailPage:itemID params:params];
-    ALBBTradeTaokeParams *taoKeParams=[[ALBBTradeTaokeParams alloc] init];
-    taoKeParams.pid = @"xxx";
     
-    // show
-    id <ALBBTradeService> tradeService = [[ALBBSDK sharedInstance] getService:@protocol(ALBBTradeService)];
-    [tradeService       show:rootViewController
-                  isNeedPush:NO
-           webViewUISettings:nil
-                        page:page
-                 taoKeParams:taoKeParams
- tradeProcessSuccessCallback:^(ALBBTradeResult * __nullable result) {
-     NSLog(@"%@", result);
- }
-  tradeProcessFailedCallback:^(NSError * __nullable error) {
-      NSLog(@"%@", error);
-  }
-     ];
-    return;
+    // ALiTradeWebViewController类中,webview的delegate设置不能放在viewdidload里面,必须在init的时候,否则函数调用的时候还是nil
+//    UINavigationController *rootViewController ;
+//    UIViewController *rootViewController = RCTPresentedViewController();
+    UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (root.presentedViewController != nil) {
+        root = root.presentedViewController;
+    }
+
+    
+    NSInteger ret = [[AlibcTradeSDK sharedInstance].tradeService
+     show: root
+     page: page
+     showParams: showParam
+     taoKeParams: taoKeParams
+     trackParam:nil
+     tradeProcessSuccessCallback:^(AlibcTradeResult * __nullable result) {
+            NSLog(@"%@", result);
+        }
+    tradeProcessFailedCallback:^(NSError * __nullable error) {
+            NSLog(@"%@", error);
+        }
+    ];
+//    //返回1,说明h5打开,否则不应该展示页面
+    if (ret == 1) {
+         
+//        [self.navigationController pushViewController:view animated:YES];
+    }
+    return ;
 }
 
 

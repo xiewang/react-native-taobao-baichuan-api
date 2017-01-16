@@ -9,9 +9,7 @@
 #import <MapKit/MapKit.h>
 #import <Foundation/Foundation.h>
 #import "RCTBridgeModule.h"
-#import <ALBBSDK/ALBBSDK.h>
-#import <ALBBTradeSDK/ALBBTradeService.h>
-#import <ALBBSDK/TaeWebViewUISettings.h>
+#import <AlibcTradeSDK/AlibcTradeSDK.h>
 #import "RCTUtils.h"
 
 
