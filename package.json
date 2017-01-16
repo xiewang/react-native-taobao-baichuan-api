@@ -1,6 +1,6 @@
 {
   "name": "react-native-taobao-baichuan-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react native module for baichuan api",
   "main": "index.js",
   "scripts": {
