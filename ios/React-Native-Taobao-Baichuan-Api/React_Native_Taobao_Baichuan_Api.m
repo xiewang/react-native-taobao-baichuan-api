@@ -7,6 +7,8 @@
 //
 
 #import "React_Native_Taobao_Baichuan_Api.h"
+#import <UIKit/UIWebView.h>
+#import "AppDelegate.h"
 
 @implementation React_Native_Taobao_Baichuan_Api
 
@@ -20,7 +22,10 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
     [self itemDetailPage: itemId];
     
 }
-
+- (dispatch_queue_t)methodQueue
+{
+    return dispatch_get_main_queue();
+}
 -(void)itemDetailPage: (NSString *) item{
     
     NSString *itemID = item;
@@ -31,19 +36,14 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
     //打开方式
     AlibcTradeShowParams* showParam = [[AlibcTradeShowParams alloc] init];
     showParam.openType = ALiOpenTypeAuto;
-    
-    
-    // ALiTradeWebViewController类中,webview的delegate设置不能放在viewdidload里面,必须在init的时候,否则函数调用的时候还是nil
-//    UINavigationController *rootViewController ;
-//    UIViewController *rootViewController = RCTPresentedViewController();
-    UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    while (root.presentedViewController != nil) {
-        root = root.presentedViewController;
-    }
+    showParam.isNeedPush = NO;
+ 
+    //UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    AppDelegate *share = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    UINavigationController *nav = (UINavigationController *) share.window.rootViewController;
 
-    
     NSInteger ret = [[AlibcTradeSDK sharedInstance].tradeService
-     show: root
+     show: nav
      page: page
      showParams: showParam
      taoKeParams: taoKeParams
@@ -55,9 +55,8 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
             NSLog(@"%@", error);
         }
     ];
-//    //返回1,说明h5打开,否则不应该展示页面
+    //返回1,说明h5打开,否则不应该展示页面
     if (ret == 1) {
-         
 //        [self.navigationController pushViewController:view animated:YES];
     }
     return ;

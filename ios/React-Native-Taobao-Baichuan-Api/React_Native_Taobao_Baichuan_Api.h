@@ -15,9 +15,4 @@
 
 @interface React_Native_Taobao_Baichuan_Api : NSObject <RCTBridgeModule>
 
-
-//
-//UIViewController *rootViewController = RCTPresentedViewController();
-//[rootViewController presentViewController:imagePicker animated:YES completion:nil];
-
 @end

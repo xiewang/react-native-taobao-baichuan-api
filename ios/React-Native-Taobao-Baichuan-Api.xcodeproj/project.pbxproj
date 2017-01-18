@@ -7,19 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2157DD6F1DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2157DD6E1DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.h */; };
+		2157DD6F1DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 2157DD6E1DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.h */; };
 		2157DD711DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.m in Sources */ = {isa = PBXBuildFile; fileRef = 2157DD701DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2157DD691DC33B36004F3D4A /* CopyFiles */ = {
+		2157DD691DC33B36004F3D4A /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				2157DD6F1DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.h in CopyFiles */,
+				2157DD6F1DC33B36004F3D4A /* React_Native_Taobao_Baichuan_Api.h in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -75,7 +76,7 @@
 			buildPhases = (
 				2157DD671DC33B36004F3D4A /* Sources */,
 				2157DD681DC33B36004F3D4A /* Frameworks */,
-				2157DD691DC33B36004F3D4A /* CopyFiles */,
+				2157DD691DC33B36004F3D4A /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -213,14 +214,22 @@
 		2157DD751DC33B36004F3D4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ios";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../ios/bc3.1/**",
+					"$(SRCROOT)/../../../ios",
+				);
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../../../ios/AppReact",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lstdc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -229,14 +238,22 @@
 		2157DD761DC33B36004F3D4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ios";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../ios/bc3.1/**",
+					"$(SRCROOT)/../../../ios",
+				);
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../../../ios/AppReact",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lstdc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
