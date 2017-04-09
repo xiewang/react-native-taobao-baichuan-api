@@ -9,6 +9,10 @@
 #import "React_Native_Taobao_Baichuan_Api.h"
 #import <UIKit/UIWebView.h>
 #import "AppDelegate.h"
+#import <AlibabaAuthSDK/ALBBSDK.h>
+#import <TBAppLinkSDK/TBAppLinkSDK.h>
+#import <AlibabaAuthSDK/ALBBSession.h>
+#import <AlibabaAuthSDK/ALBBUser.h>
 
 @implementation React_Native_Taobao_Baichuan_Api
 
@@ -16,17 +20,17 @@
 RCT_EXPORT_MODULE(React_Native_Taobao_Baichuan_Api);
 
 
-RCT_EXPORT_METHOD(jump:(NSString *)itemId)
+RCT_EXPORT_METHOD(jump:(NSString *)itemId callback:(RCTResponseSenderBlock)callback)
 {
     
-    [self itemDetailPage: itemId];
+    [self itemDetailPage: itemId: callback];
     
 }
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
 }
--(void)itemDetailPage: (NSString *) item{
+-(void)itemDetailPage: (NSString *) item : (RCTResponseSenderBlock)callback{
     
     NSString *itemID = item;
     id<AlibcTradePage> page = [AlibcTradePageFactory itemDetailPage: itemID];
@@ -49,9 +53,31 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
      taoKeParams: taoKeParams
      trackParam:nil
      tradeProcessSuccessCallback:^(AlibcTradeResult * __nullable result) {
+            ALBBUser *user ;
+            if(![[ALBBSession sharedInstance] isLogin]){
+                user = [[ALBBSession sharedInstance] getUser];
+            }
+         
+             NSMutableDictionary *retUser = [NSMutableDictionary dictionaryWithCapacity:3];
+             [retUser setObject:user.nick forKey:@"nick"];
+             [retUser setObject:user.openId forKey:@"openId"];
+             [retUser setObject:user.openSid forKey:@"openSid"];
+            callback(@[[NSNull null], user]);
             NSLog(@"%@", result);
         }
-    tradeProcessFailedCallback:^(NSError * __nullable error) {
+        tradeProcessFailedCallback:^(NSError * __nullable error) {
+            ALBBUser *user ;
+            if([[ALBBSession sharedInstance] isLogin]){
+                user = [[ALBBSession sharedInstance] getUser];
+            }
+
+            NSMutableDictionary *retUser = [NSMutableDictionary dictionaryWithCapacity:3];
+            [retUser setObject:user.nick forKey:@"nick"];
+            [retUser setObject:user.openId forKey:@"openId"];
+            [retUser setObject:user.openSid forKey:@"openSid"];
+
+            callback(@[[NSNull null], retUser]);
+
             NSLog(@"%@", error);
         }
     ];
@@ -59,6 +85,7 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId)
     if (ret == 1) {
 //        [self.navigationController pushViewController:view animated:YES];
     }
+
     return ;
 }
 
