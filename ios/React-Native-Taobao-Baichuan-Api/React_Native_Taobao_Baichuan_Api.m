@@ -50,34 +50,19 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId callback:(RCTResponseSenderBlock)callb
      show: nav
      page: page
      showParams: showParam
-     taoKeParams: taoKeParams
+     taoKeParams: nil
      trackParam:nil
      tradeProcessSuccessCallback:^(AlibcTradeResult * __nullable result) {
-            ALBBUser *user ;
-            if(![[ALBBSession sharedInstance] isLogin]){
-                user = [[ALBBSession sharedInstance] getUser];
-            }
-         
-             NSMutableDictionary *retUser = [NSMutableDictionary dictionaryWithCapacity:3];
-             [retUser setObject:user.nick forKey:@"nick"];
-             [retUser setObject:user.openId forKey:@"openId"];
-             [retUser setObject:user.openSid forKey:@"openSid"];
-            callback(@[[NSNull null], user]);
+         if (result.result == ALiTradeResultTypePaySuccess) {
+             NSDictionary *res = @{@"result": @"success", @"orders": result.payResult.paySuccessOrders};
+             callback(@[[NSNull null], res]);
+         }
+         callback(@[[NSNull null], [NSNull null]]);
             NSLog(@"%@", result);
         }
         tradeProcessFailedCallback:^(NSError * __nullable error) {
-            ALBBUser *user ;
-            if([[ALBBSession sharedInstance] isLogin]){
-                user = [[ALBBSession sharedInstance] getUser];
-            }
-
-            NSMutableDictionary *retUser = [NSMutableDictionary dictionaryWithCapacity:3];
-            [retUser setObject:user.nick forKey:@"nick"];
-            [retUser setObject:user.openId forKey:@"openId"];
-            [retUser setObject:user.openSid forKey:@"openSid"];
-
-            callback(@[[NSNull null], retUser]);
-
+            callback(@[[NSNull null],[NSNull null]]);
+            
             NSLog(@"%@", error);
         }
     ];
@@ -86,8 +71,36 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId callback:(RCTResponseSenderBlock)callb
 //        [self.navigationController pushViewController:view animated:YES];
     }
 
+    [[ALBBSDK sharedInstance] setLoginResultHandler:^(ALBBSession *session) {
+        if([session isLogin]){//登录成功
+            ALBBUser *user ;
+            user = [[ALBBSession sharedInstance] getUser];
+            NSMutableDictionary *retUser = [NSMutableDictionary dictionaryWithCapacity:3];
+            [retUser setObject:user.nick forKey:@"nick"];
+            [retUser setObject:user.openId forKey:@"openId"];
+            [retUser setObject:user.openSid forKey:@"openSid"];
+            
+            [self sendEventWithName:@"EventReminder" body:@{@"user": retUser}];
+            
+            NSLog(@"用户login");
+        }else{//已登录变为未登录
+            NSLog(@"用户logout");
+            
+        }
+    }];
+
     return ;
 }
+
+
+
+
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[@"EventReminder"];
+}
+
+
 
 
 @end
