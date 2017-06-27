@@ -56,8 +56,10 @@ RCT_EXPORT_METHOD(jump:(NSString *)itemId callback:(RCTResponseSenderBlock)callb
          if (result.result == ALiTradeResultTypePaySuccess) {
              NSDictionary *res = @{@"result": @"success", @"orders": result.payResult.paySuccessOrders};
              callback(@[[NSNull null], res]);
+         } else {
+             callback(@[[NSNull null], [NSNull null]]);
          }
-         callback(@[[NSNull null], [NSNull null]]);
+         
             NSLog(@"%@", result);
         }
         tradeProcessFailedCallback:^(NSError * __nullable error) {

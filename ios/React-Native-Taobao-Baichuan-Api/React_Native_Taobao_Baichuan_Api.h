@@ -11,8 +11,9 @@
 #import "RCTBridgeModule.h"
 #import <AlibcTradeSDK/AlibcTradeSDK.h>
 #import "RCTUtils.h"
+#import <RCTEventEmitter.h>
 
 
-@interface React_Native_Taobao_Baichuan_Api : NSObject <RCTBridgeModule>
+@interface React_Native_Taobao_Baichuan_Api : RCTEventEmitter <RCTBridgeModule>
 
 @end
