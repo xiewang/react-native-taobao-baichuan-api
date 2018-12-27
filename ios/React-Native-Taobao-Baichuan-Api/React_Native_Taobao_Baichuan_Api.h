@@ -8,7 +8,7 @@
 
 #import <MapKit/MapKit.h>
 #import <Foundation/Foundation.h>
-#import "RCTBridgeModule.h"
+#import <React/RCTBridgeModule.h>
 #import <AlibcTradeSDK/AlibcTradeSDK.h>
 #import "RCTUtils.h"
 #import <RCTEventEmitter.h>

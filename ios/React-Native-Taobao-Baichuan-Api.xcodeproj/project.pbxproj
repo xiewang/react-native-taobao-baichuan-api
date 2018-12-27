@@ -214,16 +214,13 @@
 		2157DD751DC33B36004F3D4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../ios/bc3.1/**",
-					"$(SRCROOT)/../../../ios",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ios/bc3.1.1.206/Frameworks";
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../React/**",
-					"$(SRCROOT)/../../../ios/AppReact",
+					"$(SRCROOT)/../../../ios/AppReact/**",
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
@@ -238,16 +235,13 @@
 		2157DD761DC33B36004F3D4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../ios/bc3.1/**",
-					"$(SRCROOT)/../../../ios",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../../ios/bc3.1.1.206/Frameworks";
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../React/**",
-					"$(SRCROOT)/../../../ios/AppReact",
+					"$(SRCROOT)/../../../ios/AppReact/**",
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
